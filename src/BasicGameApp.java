@@ -40,12 +40,21 @@ public class BasicGameApp implements Runnable, KeyListener {
    public JPanel panel;
    
 	public BufferStrategy bufferStrategy;
-	public Image astroPic;
+
+	public Image rigPic;
+	public Image mordPic;
+	public Image gumPic;
+	public Image darPic;
+	public Image Background;
+
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	private Astronaut astro;
-	private Astronaut rigby;
+
+	public Astronaut rigby;
+	public Astronaut mordecai;
+	public Astronaut gumball;
+	public Astronaut darwin;
 
 
    // Main method definition
@@ -65,10 +74,21 @@ public class BasicGameApp implements Runnable, KeyListener {
       setUpGraphics();
        
       //variable and objects
-      //create (construct) the objects needed for the game and load up 
-		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
-		astro = new Astronaut(10,100);
-		//rigby = new Astronaut()
+      //create (construct) the objects needed for the game and load up
+		Background = Toolkit.getDefaultToolkit().getImage("AT Bg.png");
+
+
+		rigPic = Toolkit.getDefaultToolkit().getImage("Rigby.png");
+		rigby = new Astronaut(10,200, 0, 0);
+
+		mordPic = Toolkit.getDefaultToolkit().getImage("mordecai.png");
+		mordecai = new Astronaut(10,300, 0, 1);
+
+		gumPic = Toolkit.getDefaultToolkit().getImage("Gumball.png");
+		gumball = new Astronaut(10, 100, 1, 0);
+
+		darPic = Toolkit.getDefaultToolkit().getImage("Darwin.png");
+		darwin = new Astronaut(10, 400, 1, 1);
 
 
 	}// BasicGameApp()
@@ -96,7 +116,11 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-		astro.move();
+		rigby.move();
+		mordecai.bounce();
+
+		darwin.move();
+		gumball.wrap();
 
 	}
 	
@@ -148,7 +172,12 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+		g.drawImage(Background,0,0,WIDTH,HEIGHT, null);
+
+		g.drawImage(rigPic, rigby.xpos, rigby.ypos, rigby.width, rigby.height, null);
+		g.drawImage(mordPic, mordecai.xpos, mordecai.ypos, mordecai.width, mordecai.height, null);
+		g.drawImage(gumPic, gumball.xpos, gumball.ypos, gumball	.width, gumball.height, null);
+		g.drawImage(darPic, darwin.xpos, darwin.ypos, darwin.width, darwin.height, null);
 
 		g.dispose();
 
@@ -163,8 +192,21 @@ public class BasicGameApp implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 
-		if(e.getKeyCode() == 32) {
-			System.out.println("pressed key");
+		if(e.getKeyCode() == 40){
+			rigby.dx = 0;
+			rigby.dy = 5;
+		}
+		if(e.getKeyCode() == 38){
+			rigby.dx = 0;
+			rigby.dy = -5;
+		}
+		if(e.getKeyCode() == 39){
+			rigby.dx = 5;
+			rigby.dy = 0;
+		}
+		if(e.getKeyCode() == 37){
+			rigby.dx = -5;
+			rigby.dy = 0;
 		}
 
 
@@ -172,6 +214,22 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == 40){
+			rigby.dx = 0;
+			rigby.dy = 0;
+		}
+		if(e.getKeyCode() == 38){
+			rigby.dx = 0;
+			rigby.dy = 0;
+		}
+		if(e.getKeyCode() == 39){
+			rigby.dx = 0;
+			rigby.dy = 0;
+		}
+		if(e.getKeyCode() == 37){
+			rigby.dx = 0;
+			rigby.dy = 0;
+		}
 
 	}
 }
