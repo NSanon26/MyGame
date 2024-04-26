@@ -46,19 +46,20 @@ public class Astronaut {
     public void wrap(){
         xpos = xpos + dx;
         ypos = ypos + dy;
+        dx =5;
         if(xpos>= 990){
             xpos = 0;
 
         }
         if(xpos<= 0){
-            xpos = 1000;
+            dx= 7;
 
         }
-        if(ypos<=0){
+        if(ypos==0){
             ypos = 700;
 
         }
-        if(ypos>=690){
+        if(ypos==690){
             ypos = 0;
 
         }
@@ -67,6 +68,7 @@ public class Astronaut {
         public void bounce(){
             xpos = xpos + dx;
             ypos = ypos + dy;
+
             rec  = new Rectangle(xpos, ypos, width, height);
             if(xpos>= 990){
                 dx = -dx;

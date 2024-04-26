@@ -55,6 +55,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public Astronaut mordecai;
 	public Astronaut gumball;
 	public Astronaut darwin;
+	public int score;
 
 
    // Main method definition
@@ -107,6 +108,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		while (true) {
 
          moveThings();  //move all the game objects
+			checkIntersections();
          render();  // paint the graphics
          pause(20); // sleep for 10 ms
 		}
@@ -122,6 +124,24 @@ public class BasicGameApp implements Runnable, KeyListener {
 		darwin.move();
 		gumball.wrap();
 
+	}
+	public void checkIntersections(){
+		if(rigby.rec.intersects(mordecai.rec)){
+			//rigby.isAlive = true; this is to change the backrgound when they touch
+
+			score += 1;
+			System.out.println("The score is " + score);
+		}
+		if(rigby.rec.intersects(gumball.rec)){
+			//rigby.isAlive = false;
+			score += 1;
+			System.out.println("The score is " + score);
+		}
+		if(mordecai.rec.intersects(gumball.rec)){
+			//astro.isAlive = false;
+			score += 1;
+			System.out.println("The score is " + score);
+		}
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -178,6 +198,10 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawImage(mordPic, mordecai.xpos, mordecai.ypos, mordecai.width, mordecai.height, null);
 		g.drawImage(gumPic, gumball.xpos, gumball.ypos, gumball	.width, gumball.height, null);
 		g.drawImage(darPic, darwin.xpos, darwin.ypos, darwin.width, darwin.height, null);
+		g.setColor(Color.white);
+		g.fillRect(195, 190, 70, 15);
+		g.setColor(Color.black);
+		g.drawString("Score: " + score, 200, 200);
 
 		g.dispose();
 
