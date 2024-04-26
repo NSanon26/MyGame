@@ -199,9 +199,9 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawImage(gumPic, gumball.xpos, gumball.ypos, gumball	.width, gumball.height, null);
 		g.drawImage(darPic, darwin.xpos, darwin.ypos, darwin.width, darwin.height, null);
 		g.setColor(Color.white);
-		g.fillRect(195, 190, 70, 15);
+		g.fillRect(50, 40, 70, 15);
 		g.setColor(Color.black);
-		g.drawString("Score: " + score, 200, 200);
+		g.drawString("Score: " + score, 50, 50);
 
 		g.dispose();
 
