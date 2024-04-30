@@ -16,6 +16,7 @@ public class Astronaut {
     public int height;
     public boolean isAlive;//a boolean to denote if the hero is alive or dead.
     public Rectangle rec;
+    public boolean isCrashing;
 
 
     // METHOD DEFINITION SECTION
@@ -35,6 +36,7 @@ public class Astronaut {
         height = 60;
         isAlive = true;
         rec  = new Rectangle(xpos, ypos, width, height);
+        isCrashing = false;
  
     } // constructor
 
@@ -44,6 +46,12 @@ public class Astronaut {
         ypos = ypos + dy;
         rec  = new Rectangle(xpos, ypos, width, height);
  
+    }
+    public void chase() {
+        xpos = xpos + dx;
+        ypos = ypos + dy;
+        rec  = new Rectangle(xpos, ypos, width, height);
+
     }
     public void wrap(){
         xpos = xpos + dx;

@@ -56,6 +56,8 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public Astronaut gumball;
 	public Astronaut darwin;
 	public int score;
+	public Astronaut[] darwins;
+
 
 
    // Main method definition
@@ -91,6 +93,11 @@ public class BasicGameApp implements Runnable, KeyListener {
 		darPic = Toolkit.getDefaultToolkit().getImage("Darwin.png");
 		darwin = new Astronaut(10, 400, 1, 1);
 
+		darwins = new Astronaut[20];
+		for(int i=0;i<20;i++){
+			darwins[i] = new Astronaut((int)(Math.random() * 20), (int)(Math.random() * 30), 2, 1);
+		}
+
 
 	}// BasicGameApp()
 
@@ -121,26 +128,48 @@ public class BasicGameApp implements Runnable, KeyListener {
 		rigby.move();
 		mordecai.bounce();
 
-		darwin.move();
+		darwin.chase();
+		if(darwin.xpos>= 990 ||darwin.xpos<= 0||darwin.ypos<=0 || darwin.ypos>=690){
+			darwin.dx = rigby.dx;
+		darwin.dy=rigby.dy;
+
+		}
+		for(int i = 0; i<20;i++){
+			darwins[i].move();
+		}
+
 		gumball.wrap();
 
 	}
 	public void checkIntersections(){
-		if(rigby.rec.intersects(mordecai.rec)){
+		if(rigby.rec.intersects(mordecai.rec) && rigby.isCrashing == false){
 			//rigby.isAlive = true; this is to change the backrgound when they touch
 
 			score += 1;
 			System.out.println("The score is " + score);
+			rigby.isCrashing = true;
 		}
-		if(rigby.rec.intersects(gumball.rec)){
+
+		if(rigby.rec.intersects(mordecai.rec) ==false){
+			rigby.isCrashing = false;
+		}
+		if(rigby.rec.intersects(gumball.rec) && rigby.isCrashing == false){
 			//rigby.isAlive = false;
 			score += 1;
 			System.out.println("The score is " + score);
+			rigby.isCrashing = true;
 		}
-		if(mordecai.rec.intersects(gumball.rec)){
+		if(rigby.rec.intersects(gumball.rec) ==false){
+			rigby.isCrashing = false;
+		}
+		if(mordecai.rec.intersects(gumball.rec) && mordecai.isCrashing == false){
 			//astro.isAlive = false;
 			score += 1;
 			System.out.println("The score is " + score);
+			mordecai.isCrashing = true;
+		}
+		if(mordecai.rec.intersects(gumball.rec) ==false){
+			mordecai.isCrashing = false;
 		}
 	}
 	
@@ -202,6 +231,13 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.fillRect(50, 40, 70, 15);
 		g.setColor(Color.black);
 		g.drawString("Score: " + score, 50, 50);
+		g.drawString("You are Rigby. " , 570, 50);
+		g.drawString( "Using the arrow keys to move around, you must avoid the other charcters", 570,70);
+		g.drawString("and get as little of a score as possible.", 570,80);
+
+		for(int i=0;i<20;i++){
+			g.drawImage(darPic, darwins[i].xpos, darwins[i].ypos, darwins[i].width, darwins[i].height, null);
+		}
 
 		g.dispose();
 
