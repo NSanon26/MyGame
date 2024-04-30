@@ -207,7 +207,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 		bufferStrategy.show();
 	}
-
+//codes for keys
 	@Override
 	public void keyTyped(KeyEvent e) {
 
