@@ -16,7 +16,11 @@ public class Astronaut {
     public int height;
     public boolean isAlive;//a boolean to denote if the hero is alive or dead.
     public Rectangle rec;
-    public boolean isCrashing;
+    public boolean isCrashingGumball;
+    public boolean isCrashingMordicai;
+   public boolean isCrashingRigby;
+
+
 
 
     // METHOD DEFINITION SECTION
@@ -36,8 +40,12 @@ public class Astronaut {
         height = 60;
         isAlive = true;
         rec  = new Rectangle(xpos, ypos, width, height);
-        isCrashing = false;
- 
+        isCrashingMordicai = false;
+        isCrashingGumball = false;
+        isCrashingRigby = false;
+
+
+
     } // constructor
 
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
@@ -45,11 +53,38 @@ public class Astronaut {
         xpos = xpos + dx;
         ypos = ypos + dy;
         rec  = new Rectangle(xpos, ypos, width, height);
- 
+
+    }
+    public void moves() {
+        xpos = xpos + dx;
+        ypos = ypos + dy;
+        rec  = new Rectangle(xpos, ypos, width, height);
+        if(xpos>= 990){
+            xpos = 0;
+            //width +=30;
+            //height += 30;
+        }
+        if(xpos<= 0){
+            dx= 20;
+            dy = 10;
+            //width +=30;
+            // height += 30;
+        }
+        if(ypos<=0){
+            dy=10;
+            //width +=30;
+            //height += 30;
+        }
+        if(ypos>=690){
+            dy=-20;
+            //width +=30;
+            //height += 30;
+        }
     }
     public void chase() {
         xpos = xpos + dx;
         ypos = ypos + dy;
+
         rec  = new Rectangle(xpos, ypos, width, height);
 
     }

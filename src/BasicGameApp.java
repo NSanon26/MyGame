@@ -46,6 +46,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public Image gumPic;
 	public Image darPic;
 	public Image Background;
+	public Image GAMEOVER;
 
 
    //Declare the objects used in the program
@@ -79,6 +80,7 @@ public class BasicGameApp implements Runnable, KeyListener {
       //variable and objects
       //create (construct) the objects needed for the game and load up
 		Background = Toolkit.getDefaultToolkit().getImage("AT Bg.png");
+		GAMEOVER = Toolkit.getDefaultToolkit().getImage("gameover.jpg");
 
 
 		rigPic = Toolkit.getDefaultToolkit().getImage("Rigby.png");
@@ -135,42 +137,61 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 		}
 		for(int i = 0; i<20;i++){
-			darwins[i].move();
+			darwins[i].moves();
 		}
 
 		gumball.wrap();
 
 	}
 	public void checkIntersections(){
-		if(rigby.rec.intersects(mordecai.rec) && rigby.isCrashing == false){
+		//System.out.println(mordecai.isCrashing);
+		if(rigby.rec.intersects(mordecai.rec) && mordecai.isCrashingRigby == false){
 			//rigby.isAlive = true; this is to change the backrgound when they touch
 
 			score += 1;
-			System.out.println("The score is " + score);
-			rigby.isCrashing = true;
+			System.out.println("The score is :" + score);
+
+			mordecai.isCrashingRigby = true;
 		}
 
-		if(rigby.rec.intersects(mordecai.rec) ==false){
-			rigby.isCrashing = false;
+		if(rigby.rec.intersects(mordecai.rec) == false){
+			mordecai.isCrashingRigby = false;
+			System.out.println("not crash");
 		}
-		if(rigby.rec.intersects(gumball.rec) && rigby.isCrashing == false){
+		if(rigby.rec.intersects(gumball.rec) && rigby.isCrashingGumball == false){
 			//rigby.isAlive = false;
 			score += 1;
 			System.out.println("The score is " + score);
-			rigby.isCrashing = true;
+			rigby.isCrashingGumball = true;
 		}
 		if(rigby.rec.intersects(gumball.rec) ==false){
-			rigby.isCrashing = false;
+			rigby.isCrashingGumball = false;
 		}
-		if(mordecai.rec.intersects(gumball.rec) && mordecai.isCrashing == false){
+		if(darwin.rec.intersects(rigby.rec) && darwin.isCrashingRigby == false){
 			//astro.isAlive = false;
 			score += 1;
+			rigby.width +=2;
+			rigby.height += 2;
 			System.out.println("The score is " + score);
-			mordecai.isCrashing = true;
+			darwin.isCrashingRigby = true;
 		}
-		if(mordecai.rec.intersects(gumball.rec) ==false){
-			mordecai.isCrashing = false;
+		if(darwin.rec.intersects(rigby.rec) ==false){
+			darwin.isCrashingRigby = false;
 		}
+
+for(int i = 0; i<20;i++) {
+	if (darwins[i].rec.intersects(rigby.rec) && darwins[i].isCrashingRigby == false) {
+		//astro.isAlive = false;
+		score += 1;
+		rigby.width +=2;
+		rigby.height += 2;
+		System.out.println("The score is " + score);
+		darwins[i].isCrashingRigby = true;
+	}
+	if (darwins[i].rec.intersects(rigby.rec) == false) {
+		darwins[i].isCrashingRigby = false;
+	}
+}
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -227,6 +248,9 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawImage(mordPic, mordecai.xpos, mordecai.ypos, mordecai.width, mordecai.height, null);
 		g.drawImage(gumPic, gumball.xpos, gumball.ypos, gumball	.width, gumball.height, null);
 		g.drawImage(darPic, darwin.xpos, darwin.ypos, darwin.width, darwin.height, null);
+		//g.drawRect(mordecai.rec.x, mordecai.rec.y, mordecai.rec.width, mordecai.rec.height);
+		//g.drawRect(rigby.rec.x, rigby.rec.y, rigby.rec.width, rigby.rec.height);
+
 		g.setColor(Color.white);
 		g.fillRect(50, 40, 70, 15);
 		g.setColor(Color.black);
@@ -234,10 +258,14 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawString("You are Rigby. " , 570, 50);
 		g.drawString( "Using the arrow keys to move around, you must avoid the other charcters", 570,70);
 		g.drawString("and get as little of a score as possible.", 570,80);
+		g.drawString("If you make contact with a Darwin, Rigby will grow in size.", 570,100);
+		g.drawString("Get 50 points and it's GAME OVER", 570,120);
 
 		for(int i=0;i<20;i++){
 			g.drawImage(darPic, darwins[i].xpos, darwins[i].ypos, darwins[i].width, darwins[i].height, null);
 		}
+
+		if(score>=50){g.drawImage(GAMEOVER,0,0,WIDTH,HEIGHT, null);}
 
 		g.dispose();
 
